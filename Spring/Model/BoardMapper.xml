@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.model.BoardMapper"> <!-- xml파일이 아닌 지정경로에 있는 클래스파일을 의미한다!  -->
+<!-- 모든 sql문이 저장되는 곳!  -->
+
+
+<!-- 게시판 목록 보기  -->
+
+<select id="boardList" resultType="kr.smhrd.model.BoardVO"> <!-- resultType -> 리턴할값이 있다면 리턴 할 타입을 명시해준다.  -->
+    select * from tboard order by indate desc <!-- 최신글을 상단으로 띄우기 위한 정렬  -->
+</select>
+
+<!-- 글 저장  -->
+<insert id="boardInsert" parameterType="kr.smhrd.model.BoardVO"> <!-- parameterType : 무언가 받아올게 있을 때 사용  -->
+    insert into tboard(title, contents, writer)
+    values(#{title},#{contents},#{writer}) <!-- #{가져올 매개변수이름}  -->
+    
+</insert>
+
+<!-- 글 가져오기  -->
+<select id="boardContent" resultType="kr.smhrd.model.BoardVO"><!-- 매개변수가 하나일 때는 안적어도 된다!  -->
+    select * from tboard where idx = #{idx}
+</select>
+
+<!-- 글 수정하기  -->
+<update id="boardUpdate" parameterType="kr.smhrd.model.BoardVO">
+    update tboard set title = #{title}, contents = #{contents} where idx = #{idx}
+</update>
+
+<!-- 글 삭제하기  -->
+<delete id="boardDelete" parameterType="int"> <!-- 매개변수가 하나일 때는 안적어도 된다!  -->
+	delete from tboard where idx = #{idx}    
+</delete>
+
+
+
+</mapper>
